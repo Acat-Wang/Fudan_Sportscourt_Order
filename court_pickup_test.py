@@ -64,16 +64,16 @@ def base64_api_string(uname, pwd, img, typeid):
 # 定义配置信息
 refresh_internal1 = 120 #二阶段速度
 refresh_internal = 5#一阶段速度
-refresh_count1 = 1 #一阶段次数
-refresh_count = 80#二阶段次数
+refresh_count1 = 40 #一阶段次数
+refresh_count = 120 #二阶段次数
 order_today = True
 order_next_week = False #只在order_today == False时起作用，如果定下周的场就是 True
-order_weekday = "7" #只在order_today == False时起作用，预定周几的场地就写几
+order_weekday = "4" #只在order_today == False时起作用，预定周几的场地就写几
 #user_id = 1 #0 for jianghao, 1 for wyzm, 2 for XRjia
-order_limit = 1 #订几个小时
+order_limit = 3 #订几个小时
 
 # 根据日期和时间，找到对应的可预约按钮，并点击
-start_time = "18:00" # 你想要预约的开始时间，格式为 hh:mm
+start_time = "16:00" # 你想要预约的开始时间，格式为 hh:mm
 end_time = "19:00" # 你想要预约的结束时间，格式为 hh:mm
 
 # 创建一个 WebDriver 对象
@@ -201,7 +201,7 @@ for _ in range (refresh_count):
                 try:
                     #找到验证码元素，下载图片并用api处理
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "scream")))
-                    time.sleep(random.uniform(0.1, 0.2))
+                    #time.sleep(random.uniform(0.1, 0.2))
                     checkcode = driver.find_element(By.ID,"scream")
                     src = checkcode.get_attribute("src")
                     b64_data = src[len("data:image/jpg;base64,"): ]
@@ -224,7 +224,7 @@ for _ in range (refresh_count):
                     ActionChains(driver).click_and_hold(slider).perform()
 
                     # 等待一段随机时间，模拟真人反应
-                    time.sleep(random.uniform(0.1, 0.2))
+                    #time.sleep(random.uniform(0.1, 0.2))
                     offset = int(x) / 469 * 270 - 14
                     ActionChains(driver).drag_and_drop_by_offset(slider, offset, 0).perform()
                     # 等待一段随机时间，模拟真人反应
@@ -232,7 +232,7 @@ for _ in range (refresh_count):
                     # 释放鼠标左键
                     ActionChains(driver).release().perform()
                     # 点击预约
-                    time.sleep(random.uniform(0.1, 0.2))
+                    #time.sleep(random.uniform(0.1, 0.2))
                     order_button = driver.find_element(By.ID,"btn_sub")
                     order_button.click()
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "order_table_td1")))
@@ -264,7 +264,7 @@ for _ in range (refresh_count):
             break
         except:
             iy_info("脚本挂了", "手动检查一下")
-            time.sleep(random.uniform(1, 2))
+            #time.sleep(random.uniform(1, 2))
 
 
 # 判断标志变量是否为False，表示没有找到符合条件的元素

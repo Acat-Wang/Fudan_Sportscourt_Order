@@ -26,7 +26,7 @@ mypassword = config.get('credentials', 'password')
 #定义IYYU的密钥
 IYUU_TOKEN = config.get('credentials', 'IYUU')
 
-refresh_internal = 3
+refresh_internal = 2
 refresh_count = 40
 order_today = False
 
@@ -106,7 +106,7 @@ login_button.click()
 
 # 等待页面加载完成
 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "username")))
-time.sleep(random.uniform(2, 5))
+time.sleep(random.uniform(2, 3))
 
 # 输入用户名和密码
 username = driver.find_element(By.ID, "username")
@@ -123,7 +123,7 @@ if driver.find_elements(By.ID, "captchaImg"):
         try:
             password = driver.find_element(By.ID, "password")
             password.send_keys("wang2222.")
-            time.sleep(random.uniform(1, 2))
+            #time.sleep(random.uniform(1, 2))
             checkcodeimg = driver.find_element(By.ID,"captchaImg")
             # src = checkcodeimg.get_attribute("src")
             checkcodeimg_b64 = checkcodeimg.screenshot("checkcode.jpg")
@@ -214,7 +214,7 @@ for hour in reversed(range(start_hour, end_hour)):
             try:
                 #找到验证码元素，下载图片并用opencv处理
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "scream")))
-                time.sleep(random.uniform(0.1, 0.2))
+                #time.sleep(random.uniform(0.1, 0.2))
                 checkcode = driver.find_element(By.ID,"scream")
                 src = checkcode.get_attribute("src")
                 b64_data = src[len("data:image/jpg;base64,"): ]
@@ -237,13 +237,13 @@ for hour in reversed(range(start_hour, end_hour)):
                 ActionChains(driver).click_and_hold(slider).perform()
 
                 # 等待一段随机时间，模拟真人反应
-                time.sleep(random.uniform(0.1, 0.2))
+                #time.sleep(random.uniform(0.1, 0.2))
                 offset = int(x) / 469 * 270 - 14
                 ActionChains(driver).drag_and_drop_by_offset(slider, offset, 0).perform()
                 
                 # 释放鼠标左键
                 ActionChains(driver).release().perform()
-                time.sleep(random.uniform(0.1, 0.2))
+                #time.sleep(random.uniform(0.1, 0.2))
                 # 点击预约
                 order_button = driver.find_element(By.ID,"btn_sub")
                 order_button.click()
@@ -251,12 +251,18 @@ for hour in reversed(range(start_hour, end_hour)):
                 ordered_flag = True
                 break
             except:
-                time.sleep(random.uniform(0.1, 0.2))
+                #time.sleep(random.uniform(0.1, 0.2))
                 if driver.find_elements(By.CLASS_NAME, "pop_content"):
                     break
+
                 elif driver.find_elements(By.CSS_SELECTOR, ".re-btn"):
                     reset_button = driver.find_element(By.CSS_SELECTOR, ".re-btn")
                     reset_button.click()
+
+                elif driver.find_elements(By.ID, "verify_button"):
+                    verify_button = driver.find_element(By.ID, "verify_button")
+                    verify_button.click()
+                    
                 elif driver.find_elements(By.ID,"btn_sub"):
                     order_button = driver.find_element(By.ID,"btn_sub")
                     order_button.click()
@@ -270,7 +276,7 @@ for hour in reversed(range(start_hour, end_hour)):
         print(f"很遗憾，预约 {hour}:00-{hour+1}:00 失败！")
         order_result = order_result + f"很遗憾，预约 {hour}:00-{hour+1}:00 失败！\n"
     
-    time.sleep(random.uniform(0.1, 1))
+    #time.sleep(random.uniform(0.1, 1))
     driver.get(today_url)
 
 #发送预约结果
