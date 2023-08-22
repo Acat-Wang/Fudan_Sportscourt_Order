@@ -242,15 +242,23 @@ for _ in range (refresh_count):
                     iy_info("羽毛球场预约", order_result)
                     break
                 except:
+                    #time.sleep(random.uniform(0.1, 0.2))
                     if driver.find_elements(By.CLASS_NAME, "pop_content"):
                         break
+
                     elif driver.find_elements(By.CSS_SELECTOR, ".re-btn"):
                         reset_button = driver.find_element(By.CSS_SELECTOR, ".re-btn")
                         reset_button.click()
+
+                    elif driver.find_elements(By.ID, "verify_button"):
+                        verify_button = driver.find_element(By.ID, "verify_button")
+                        verify_button.click()
+
                     elif driver.find_elements(By.ID,"btn_sub"):
                         order_button = driver.find_element(By.ID,"btn_sub")
                         order_button.click()
                         break
+
     if order_status == order_finish_status :
         break
     else:
