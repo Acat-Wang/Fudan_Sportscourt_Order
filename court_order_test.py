@@ -243,7 +243,7 @@ for hour in reversed(range(start_hour, end_hour)):
                 
                 # 释放鼠标左键
                 ActionChains(driver).release().perform()
-                #time.sleep(random.uniform(0.1, 0.2))
+                time.sleep(random.uniform(0.1, 0.2))
                 # 点击预约
                 order_button = driver.find_element(By.ID,"btn_sub")
                 order_button.click()

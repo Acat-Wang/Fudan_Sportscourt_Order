@@ -64,11 +64,11 @@ def base64_api_string(uname, pwd, img, typeid):
 # 定义配置信息
 refresh_internal1 = 120 #二阶段速度
 refresh_internal = 5#一阶段速度
-refresh_count1 = 40 #一阶段次数
+refresh_count1 = 1 #一阶段次数
 refresh_count = 120 #二阶段次数
 order_today = True
 order_next_week = False #只在order_today == False时起作用，如果定下周的场就是 True
-order_weekday = "4" #只在order_today == False时起作用，预定周几的场地就写几
+order_weekday = "5" #只在order_today == False时起作用，预定周几的场地就写几
 #user_id = 1 #0 for jianghao, 1 for wyzm, 2 for XRjia
 order_limit = 3 #订几个小时
 
@@ -232,7 +232,7 @@ for _ in range (refresh_count):
                     # 释放鼠标左键
                     ActionChains(driver).release().perform()
                     # 点击预约
-                    #time.sleep(random.uniform(0.1, 0.2))
+                    time.sleep(random.uniform(0.1, 0.2))
                     order_button = driver.find_element(By.ID,"btn_sub")
                     order_button.click()
                     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "order_table_td1")))
