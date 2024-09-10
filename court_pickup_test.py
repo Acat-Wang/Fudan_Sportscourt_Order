@@ -20,9 +20,9 @@ import configparser
 #读取配置信息
 config = configparser.ConfigParser()
 config.read('config.ini')
-user_name_text = config.get('credentials', 'username')
-user_pwd_text = config.get('credentials', 'password')
-IYUU_TOKEN = config.get('credentials', 'IYUU')
+user_name_text = config.get('credentials2', 'username')
+user_pwd_text = config.get('credentials2', 'password')
+IYUU_TOKEN = config.get('credentials2', 'IYUU')
 
 # 定义IYYU信息发送函数
 def iyuu(IYUU_TOKEN):
@@ -62,19 +62,19 @@ def base64_api_string(uname, pwd, img, typeid):
     return ""
 
 # 定义配置信息
-refresh_internal1 = 120 #二阶段速度
-refresh_internal = 5#一阶段速度
-refresh_count1 = 1 #一阶段次数
-refresh_count = 120 #二阶段次数
+refresh_internal1 = 20 #二阶段速度
+refresh_internal = 3#一阶段速度
+refresh_count1 = 5 #一阶段次数
+refresh_count = 1000 #二阶段次数
 order_today = True
 order_next_week = False #只在order_today == False时起作用，如果定下周的场就是 True
-order_weekday = "5" #只在order_today == False时起作用，预定周几的场地就写几
+order_weekday = "3" #只在order_today == False时起作用，预定周几的场地就写几
 #user_id = 1 #0 for jianghao, 1 for wyzm, 2 for XRjia
-order_limit = 3 #订几个小时
+order_limit = 1 #订几个小时
 
 # 根据日期和时间，找到对应的可预约按钮，并点击
-start_time = "16:00" # 你想要预约的开始时间，格式为 hh:mm
-end_time = "19:00" # 你想要预约的结束时间，格式为 hh:mm
+start_time = "19:00" # 你想要预约的开始时间，格式为 hh:mm
+end_time = "21:00" # 你想要预约的结束时间，格式为 hh:mm
 
 # 创建一个 WebDriver 对象
 driver = webdriver.Edge()
@@ -166,7 +166,8 @@ for _ in range (refresh_count):
                 text_end_time = '{:0>2d}:30'.format(hour+1)
 
             text_start_time = '{:0>2d}:00'.format(hour)
-
+            found_flag = False
+            
             try:
                 # 等待页面加载完成
                 WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "con_one_1")))

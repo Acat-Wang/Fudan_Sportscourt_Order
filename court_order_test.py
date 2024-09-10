@@ -29,7 +29,9 @@ IYUU_TOKEN = config.get('credentials', 'IYUU')
 refresh_internal = 2
 refresh_count = 40
 order_today = False
-
+# 定义时间
+start_time = "16:00" # 你想要预约的开始时间，格式为 hh:mm
+end_time = "19:00" # 你想要预约的结束时间，格式为 hh:mm
 
 
 #定义IYYU信息发送函数
@@ -49,7 +51,7 @@ def click_button_by_weekday():
     # 获取今天是周几，返回一个数字，0 表示周一，6 表示周日
     weekday = datetime.datetime.today().weekday()
     # 如果是周五或周六或周日，就跳转到下一周，点击 id 为 "one1" 的按钮
-    if weekday == 4 or weekday == 5 or weekday == 6:
+    if weekday == 5 or weekday == 6:
         button = driver.find_element(By.CLASS_NAME, "right")
         button.click()
         WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "site_top")))
@@ -70,12 +72,12 @@ def click_button_by_weekday():
         date_items.click()
         print("今天是周一, 点击了第3个按钮。")
 
-#    如果是周二或周三，就点击 id 为 "one4" 的按钮
-    # elif weekday == 0:
-    #     date_items = driver.find_element(By.ID, "one1")
-    #     date_items.click()
-    #     print("今天是周一，点击了第一个按钮。")
-    # 如果是别的时间，就什么也不干
+#    如果是周五，就点击 id 为 "one7" 的按钮
+    elif weekday == 4:
+        date_items = driver.find_element(By.ID, "one7")
+        date_items.click()
+        print("今天是周一，点击了第一个按钮。")
+#    如果是别的时间，就什么也不干
 
     else:
         print("今天不需要预约场地。")
@@ -140,10 +142,6 @@ if driver.find_elements(By.ID, "captchaImg"):
         except:
             driver.refresh()
 
-
-# 根据日期和时间，找到对应的可预约按钮，并点击
-start_time = "16:00" # 你想要预约的开始时间，格式为 hh:mm
-end_time = "19:00" # 你想要预约的结束时间，格式为 hh:mm
 
 # 计算时间在列表中的索引（从0开始）
 start_hour = int(start_time[:2])
@@ -243,7 +241,7 @@ for hour in reversed(range(start_hour, end_hour)):
                 
                 # 释放鼠标左键
                 ActionChains(driver).release().perform()
-                time.sleep(random.uniform(0.1, 0.2))
+                time.sleep(random.uniform(0.2, 0.3))
                 # 点击预约
                 order_button = driver.find_element(By.ID,"btn_sub")
                 order_button.click()
