@@ -1,0 +1,1 @@
+py.exe -i .\install_deps.py

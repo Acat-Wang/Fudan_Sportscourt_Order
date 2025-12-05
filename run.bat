@@ -1,0 +1,1 @@
+py.exe -i .\test.py
